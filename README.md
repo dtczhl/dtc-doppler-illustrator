@@ -1,4 +1,7 @@
 # doppler-illustrator
+
+# This Repo is so terribly documented. I will rewrite it in a few days...
+
 Illustrating Doppler effect using sounds.
 
 Need 2 smartphones, one for sending sounds, and the other for receiving sounds. 
