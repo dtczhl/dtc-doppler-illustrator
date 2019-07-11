@@ -1,11 +1,14 @@
 package com.huanlezhang.dtcdopplerillustrator;
 
+import android.Manifest;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -14,9 +17,16 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ToggleButton;
 
+import java.util.Arrays;
+
 public class MainActivity extends Activity {
 
     private static final String TAG = "DTC MainActivity";
+
+    private static final String[] PermissionStrings = {
+            Manifest.permission.RECORD_AUDIO
+    };
+    private static final int Permission_ID = 1;
 
     private RadioGroup mRadioGroup;
 
@@ -36,12 +46,21 @@ public class MainActivity extends Activity {
     PlaySound mPlaySound = new PlaySound();
     private final int FREQ_SOUND = 19000;   // emit 19 KHz sounds
 
+    // for receiver
+    private Handler mHandler = new Handler();
+    private Runnable mDrawFFTRun = new DrawFFT();
+
+    private AnalyzeFrequency mFftAnalysis;
+    private final int N_FFT_DOT = 4096;
+    private float[] mCurArray = new float[N_FFT_DOT/2-1];
+    private double mScreenWidthRatio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ActivityCompat.requestPermissions(this, PermissionStrings, Permission_ID);
 
         mRadioGroup = findViewById(R.id.radioGroup);
 
@@ -89,6 +108,9 @@ public class MainActivity extends Activity {
             // receiver
             mIsSender = false;
             Log.d(TAG, "receiver");
+
+            mFftAnalysis = new AnalyzeFrequency(mHandler, mDrawFFTRun);
+            mFftAnalysis.start();
         }
     }
 
@@ -100,7 +122,11 @@ public class MainActivity extends Activity {
                 mPlaySound = null;
             }
         } else {
-
+            if (mFftAnalysis != null) {
+                mFftAnalysis.stop();
+                mFftAnalysis = null;
+            }
+            Arrays.fill(mCurArray, (float) 0.0);
         }
     }
 
@@ -111,5 +137,13 @@ public class MainActivity extends Activity {
         }
 
         mMainToggleBtn.setEnabled(enable);
+    }
+
+    // draw doppler on screen
+    public class DrawFFT implements Runnable{
+        @Override
+        public void run() {
+            Log.d(TAG, "do nothing");
+        }
     }
 }
