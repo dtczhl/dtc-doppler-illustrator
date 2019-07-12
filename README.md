@@ -17,7 +17,7 @@ Two phones are required: one for emitting inaudible sounds and the other for cal
 
 It has mainly two components. One for transmitting signals, and the other one for analyzing received signals. Parts of codes are copied from my other two repositories [dtc-frequency-player](https://github.com/dtczhl/dtc-frequency-player) and [dtc-acoustic-spectrumer](https://github.com/dtczhl/dtc-acoustic-spectrumer). You could refer to these repositories for some details.
 
-###  Sender
+### Sender
 The sender part is implemented in the `PlaySound.java` class, which emits sounds of a single frequency. The phone sends out sounds of 19 KHz. You can easily change to other frequencies if you like. See my repo [dtc-frequency-player](https://github.com/dtczhl/dtc-frequency-player)
 
 ### Receiver

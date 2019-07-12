@@ -30,7 +30,7 @@ import java.util.Arrays;
 
 public class MainActivity extends Activity {
 
-    private static final String TAG = "DTC MainActivity";
+    // private static final String TAG = "DTC MainActivity";
 
     private static final String[] PermissionStrings = {
             Manifest.permission.RECORD_AUDIO
@@ -124,8 +124,6 @@ public class MainActivity extends Activity {
         } else {
             // receiver
             mIsSender = false;
-            Log.d(TAG, "receiver");
-
             mFftAnalysis = new AnalyzeFrequency(mHandler, mDrawFFTRun);
             mFftAnalysis.start();
         }

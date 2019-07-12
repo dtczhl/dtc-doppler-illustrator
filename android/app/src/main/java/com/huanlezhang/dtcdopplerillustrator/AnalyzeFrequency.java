@@ -21,7 +21,7 @@ import java.util.Arrays;
 
 public class AnalyzeFrequency {
 
-    private static final String TAG = "DTC AnalyzeFrequency";
+    // private static final String TAG = "DTC AnalyzeFrequency";
 
     // interface to draw on screen
     private Handler mHandler;
