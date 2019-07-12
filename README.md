@@ -17,23 +17,25 @@ Two phones are required: one for emitting inaudible sounds and the other for cal
 
 It has mainly two components. One for transmitting signals, and the other one for analyzing received signals. Parts of codes are copied from my other two repositories [dtc-frequency-player](https://github.com/dtczhl/dtc-frequency-player) and [dtc-acoustic-spectrumer](https://github.com/dtczhl/dtc-acoustic-spectrumer). You could refer to these repositories for some details.
 
-1.  The sender part is implemented in the `PlaySound.java` class, which emits sounds of a single frequency. The phone sends out sounds of 19 KHz. You can easily change to other frequencies if you like. See my repo [dtc-frequency-player](https://github.com/dtczhl/dtc-frequency-player)
+###  Sender
+The sender part is implemented in the `PlaySound.java` class, which emits sounds of a single frequency. The phone sends out sounds of 19 KHz. You can easily change to other frequencies if you like. See my repo [dtc-frequency-player](https://github.com/dtczhl/dtc-frequency-player)
 
-2.  The receiver part is implemented in the `AnalyzeFrequency.java` class. The acoustic signals go through the following processing
+### Receiver
+The receiver part is implemented in the `AnalyzeFrequency.java` class. The acoustic signals go through the following processing
 
-  1)  receive sounds. See my repo [dtc-acoustic-spectrumer](https://github.com/dtczhl/dtc-acoustic-spectrumer)
+1)  receive sounds. See my repo [dtc-acoustic-spectrumer](https://github.com/dtczhl/dtc-acoustic-spectrumer)
 
-  2)  filtering. We apply a bandpass filter that only allows signals within \[18KHz, 21KHz\]. There is a very convenient Android app named *FIR Filter Designer* that can generate Java code for you. The higher order of filters causes greater computation overhead.
+2)  filtering. We apply a bandpass filter that only allows signals within \[18KHz, 21KHz\]. There is a very convenient Android app named *FIR Filter Designer* that can generate Java code for you. The higher order of filters causes greater computation overhead.
 
-  2)  undersampling and overlapping. Undersampling is applied to increase the frequency resolution and overlapping is used to increase temporal fidelity. We use 8X undersampling and 0.875 overlapping.
+2)  undersampling and overlapping. Undersampling is applied to increase the frequency resolution and overlapping is used to increase temporal fidelity. We use 8X undersampling and 0.875 overlapping.
 
-  3)  window function. We apply Blackman-Harris window to smooth the spectrum. You can try other window functions as well. <https://en.wikipedia.org/wiki/Window_function>
+3)  window function. We apply Blackman-Harris window to smooth the spectrum. You can try other window functions as well. <https://en.wikipedia.org/wiki/Window_function>
 
-  4)  Fast-Fourier Transform (FFT). See my repo [dtc-acoustic-spectrumer](https://github.com/dtczhl/dtc-acoustic-spectrumer)
+4)  Fast-Fourier Transform (FFT). See my repo [dtc-acoustic-spectrumer](https://github.com/dtczhl/dtc-acoustic-spectrumer)
 
-  5)  calculate Doppler shift. Since we know that the sender's signal is 19 KHz, we only need to calculate the received frequency (with the strongest magnitude) minus 19 KHz.
+5)  calculate Doppler shift. Since we know that the sender's signal is 19 KHz, we only need to calculate the received frequency (with the strongest magnitude) minus 19 KHz.
 
-  6)  draw Doppler shift on screen. See my repo [dtc-acoustic-spectrumer](https://github.com/dtczhl/dtc-acoustic-spectrumer)
+6)  draw Doppler shift on screen. See my repo [dtc-acoustic-spectrumer](https://github.com/dtczhl/dtc-acoustic-spectrumer)
 
 ## More Details
 
