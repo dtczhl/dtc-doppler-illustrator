@@ -45,10 +45,6 @@ Or [Paper](https://www.huanlezhang.com/publication/journal/dopenc_tmc_18/paper.p
 
 Please also consider to cite my papers. Thank you.
 
-## Notes
-
-*   See branch `multi-channel` for the old version which splits \[18 KHz, 20 KHz\] into five channels.
-
 ## Phones Tested
 *   Huawei Mate 20
 *   Google Pixel 2
