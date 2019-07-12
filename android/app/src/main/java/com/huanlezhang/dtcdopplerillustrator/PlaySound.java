@@ -4,7 +4,9 @@ import android.media.AudioManager;
 import android.media.AudioTrack;
 
 /**
- * @author  Huanle Zhang, at University of California, Davis
+ * Emit sounds
+ *
+ * @author  Huanle Zhang, University of California, Davis
  *          www.huanlezhang.com
  * @version 0.2
  * @since   2019-05-28

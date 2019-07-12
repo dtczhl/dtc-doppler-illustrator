@@ -13,11 +13,20 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import java.util.Arrays;
+
+/**
+ * Illustrating Doppler effect
+ *
+ * @author  Huanle Zhang, University of California, Davis
+ *          www.huanlezhang.com
+ * @version 0.2
+ * @since   2019-07-11
+ */
 
 public class MainActivity extends Activity {
 
@@ -41,6 +50,7 @@ public class MainActivity extends Activity {
     private Bitmap mBitmap;
     private Canvas mCanvas;
     private Paint mPaint;
+    private Paint mBaseLinePaint;
 
     // for sender
     PlaySound mPlaySound = new PlaySound();
@@ -53,7 +63,7 @@ public class MainActivity extends Activity {
     private AnalyzeFrequency mFftAnalysis;
     private final int N_FFT_DOT = 4096;
     private float[] mCurArray = new float[N_FFT_DOT/2-1];
-    private double mScreenWidthRatio;
+    private static final int FREQ_OFFSET_MAX = 20;  // maximum frequency range
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,9 +99,16 @@ public class MainActivity extends Activity {
         mPaint = new Paint();
         mPaint.setColor(Color.BLACK);
         mPaint.setStrokeWidth(10);
+        mBaseLinePaint = new Paint();
+        mBaseLinePaint.setColor(Color.BLUE);
+        mBaseLinePaint.setStrokeWidth(5);
         mImageView.setImageBitmap(mBitmap);
         mImageView.invalidate();
 
+        TextView maxFreqText = findViewById(R.id.maxFreq);
+        maxFreqText.setText(FREQ_OFFSET_MAX + " Hz");
+        TextView minFreqText = findViewById(R.id.minFreq);
+        minFreqText.setText(-FREQ_OFFSET_MAX + " Hz");
     }
 
     void startMain() {
@@ -143,7 +160,27 @@ public class MainActivity extends Activity {
     public class DrawFFT implements Runnable{
         @Override
         public void run() {
-            Log.d(TAG, "do nothing");
+            if (mFftAnalysis == null) {
+                return;
+            }
+            int scaleFFT = (mImageViewHeight/2) / FREQ_OFFSET_MAX;
+            int N_CH_DOT = mFftAnalysis.N_CH_DOT;
+            int fftInterval = (int) (1.0 * mImageViewWidth / N_CH_DOT);
+            int fftDisplayRange = fftInterval * N_CH_DOT;
+            int index = (mFftAnalysis.mChIndex - 1) % N_CH_DOT;
+
+            mCanvas.drawColor(Color.LTGRAY);
+
+            // horizontal base line
+            mCanvas.drawLine(0, mImageViewHeight/2, mImageViewWidth, mImageViewHeight/2, mBaseLinePaint);
+
+            for (int i = fftDisplayRange; i > fftInterval; i -= fftInterval) {
+                mCanvas.drawLine(i, mImageViewHeight / 2 - scaleFFT * mFftAnalysis.mCh[(index + 2 * N_CH_DOT) % N_CH_DOT],
+                        i - fftInterval, mImageViewHeight / 2 - scaleFFT * mFftAnalysis.mCh[(index + 2 * N_CH_DOT - 1) % N_CH_DOT],
+                        mPaint);
+                --index;
+            }
+            mImageView.invalidate();
         }
     }
 }
