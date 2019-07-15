@@ -40,8 +40,8 @@ The receiver part is implemented in the `AnalyzeFrequency.java` class. The acous
 ## More Details
 
 This repo is part of my project. For more technical details please refer to my paper   
-*   [Paper 1](https://www.huanlezhang.com/publication/conference/dopenc_mobicom_16/paper.pdf) DopEnc: Acoustic-based Encounter Profiling Using Smartphones, *published in ACM Conference on Mobile Computing and Networking (MobiCom)*, 2016   
-*   [Paper 2](https://www.huanlezhang.com/publication/journal/dopenc_tmc_18/paper.pdf) An Acoustic-Based Encounter Profiling System, *published in IEEE Transactions on Mobile Computing (TMC)*, 2018
+*   [\[Paper 1\]](https://www.huanlezhang.com/publication/conference/dopenc_mobicom_16/paper.pdf) DopEnc: Acoustic-based Encounter Profiling Using Smartphones, *published in ACM Conference on Mobile Computing and Networking (MobiCom)*, 2016   
+*   [\[Paper 2\]](https://www.huanlezhang.com/publication/journal/dopenc_tmc_18/paper.pdf) An Acoustic-Based Encounter Profiling System, *published in IEEE Transactions on Mobile Computing (TMC)*, 2018
 
 Please also consider to cite my papers. Thank you.
 
